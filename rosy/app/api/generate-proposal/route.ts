@@ -15,9 +15,9 @@ const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { mood, user, partner, language } = body;
+    const { mood, relationship, partner, language } = body;
 
-    if (!mood || !user || !partner || !language) {
+    if (!mood || !relationship || !partner || !language) {
       return NextResponse.json(
         { error: "All fields are required!" },
         { status: 400 }
@@ -28,30 +28,30 @@ export async function POST(request: NextRequest) {
       temperature: 1,
       topP: 0.95,
       topK: 40,
-      maxOutputTokens: 200,
+      maxOutputTokens: 100,
     };
 
-    const prompt = `Write a short poem about ${partner} in ${language}, who is the partner of ${user}. The poem should include both their names. The mood of the poem should be ${mood}.`;
+    const prompt = `Generate a lovely proposal for my partner. The relationship between me and my partner is ${relationship} and my partner is ${partner}. The proposal should be in ${language}. The proposal should include my partner's name. The mood of the proposal should be ${mood}.`;
 
     const result = await model.generateContent({
       contents: [{ role: "user", parts: [{ text: prompt }] }],
       generationConfig,
     });
 
-    const poem =
-      result.response?.candidates?.[0]?.content?.parts?.[0]?.text || "No poem generated.";
+    const proposal =
+      result.response?.candidates?.[0]?.content?.parts?.[0]?.text || "No proposal generated.";
 
       await dbConnect();
-      await User.create({ user, partner, mood, language, poem });
+      await User.create({ relationship, partner, mood, language, proposal });
 
     return NextResponse.json(
-      { poem },
+      { proposal },
       { status: 201, headers: { "Content-Type": "application/json" } }
     );
   } catch (error) {
     console.error("❌ API Error:", error);
     return NextResponse.json(
-      { error: "Failed to generate poem due to API error" },
+      { error: "Failed to generate proposal due to API error" },
       { status: 500 }
     );
   }

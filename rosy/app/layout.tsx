@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Rosy Poem Generator",
-  description: "Generate a short poem about your partner",
+  title: "Proposal Generator",
+  description: "Generate a proposal with AI",
 };
 
 export default function RootLayout({

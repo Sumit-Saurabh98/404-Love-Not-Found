@@ -1,23 +1,23 @@
 import mongoose, { Schema, model, models } from "mongoose";
 
 export interface IUser {
-  user: string;
-  partner: string;
   _id?: mongoose.Types.ObjectId;
+  relationship: string;
+  partner: string;
   language: string;
   mood: string;
-  poem: string;
+  proposal: string;
   createdAt?: Date;
   updatedAt?: Date;
 }
 
 const userSchema = new Schema<IUser>(
   {
-    user: { type: String, required: true },
+    relationship: { type: String, required: true },
     partner: { type: String, required: true },
     language: { type: String, required: true },
     mood: { type: String, required: true },
-    poem: { type: String },
+    proposal: { type: String },
   },
   { timestamps: true }
 );

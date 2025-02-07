@@ -28,7 +28,7 @@ export async function POST(request: NextRequest) {
       temperature: 1,
       topP: 0.95,
       topK: 40,
-      maxOutputTokens: 100,
+      maxOutputTokens: 200,
     };
 
     const prompt = `Generate a lovely proposal for my partner. The relationship between me and my partner is ${relationship} and my partner is ${partner}. The proposal should be in ${language}. The proposal should include my partner's name. The mood of the proposal should be ${mood}.`;
